@@ -38,14 +38,14 @@ git clone https://github.com/pengxiaohua/react-lowcode
 ```bash
 cd react-lowcode
 
-npm install
+pnpm install
 
 ```
 
 - run
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 - build
