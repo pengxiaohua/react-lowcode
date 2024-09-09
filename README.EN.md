@@ -1,4 +1,4 @@
-# 基于 React18 + TypeScript + Tailwind 的低代码平台
+# 基于 React18 + TypeScript + Tailwind + Zustand 的低代码平台
 
 **English** | [中文](./README.md)
 
@@ -60,7 +60,7 @@ pnpm build
 - 构建工具：[Vite 5.x](https://cn.vitejs.dev/)
 - 前端框架：[React 18.x](https://react.dev/)
   <!-- - 路由工具：[Vue Router 4.x](https://next.router.vuejs.org/zh/index.html) -->
-  <!-- - 状态管理：[Vuex 4.x](https://next.vuex.vuejs.org/) -->
+- 状态管理：[Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)
     <!-- - PC 端 UI 框架：[Element Plus](https://element-plus.org/#/zh-CN) -->
   <!-- - H5 端 UI 框架：[vant](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/) -->
 - Tailwind CSS：[Tailwindcss](https://tailwindcss.com/)
