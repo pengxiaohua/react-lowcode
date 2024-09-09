@@ -63,7 +63,7 @@ pnpm build
   <!-- - 状态管理：[Vuex 4.x](https://next.vuex.vuejs.org/) -->
     <!-- - PC 端 UI 框架：[Element Plus](https://element-plus.org/#/zh-CN) -->
   <!-- - H5 端 UI 框架：[vant](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/) -->
-- Tailwind CSS：[tailwindcss](https://tailwindcss.com/)
+- Tailwind CSS：[Tailwindcss](https://tailwindcss.com/)
 - HTTP 工具：[Axios](https://axios-http.com/)
 - Git Hook 工具：[husky](https://typicode.github.io/husky/#/) + [lint-staged](https://github.com/okonet/lint-staged)
 - 代码规范：[EditorConfig](http://editorconfig.org) + [Prettier](https://prettier.io/) + [ESLint](https://eslint.org/) + [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript#translation)
