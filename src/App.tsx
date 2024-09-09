@@ -1,10 +1,11 @@
-import ReactPlayground from "./pages/ReactPlayground"
+import React from 'react'
+
 import './App.css'
 
 function App() {
 
   return (
-    <ReactPlayground />
+    <div>1</div>
   )
 }
 

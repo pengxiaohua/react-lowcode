@@ -1,6 +1,6 @@
 # 基于 React18 + TypeScript + Tailwind 的低代码平台
 
-**中文** | [English](./README.EN.md)
+**English** | [中文](./README.md)
 
 ### 一个使用 React，快速搭建页面的低代码平台
 
@@ -38,14 +38,14 @@ git clone https://github.com/pengxiaohua/react-lowcode
 ```bash
 cd react-lowcode
 
-npm install
+pnpm install
 
 ```
 
 - run
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 - build
