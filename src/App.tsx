@@ -1,12 +1,10 @@
-import React from 'react'
+import LowCodeEditor from './pages/LowCodeEditor'
 
 import './App.css'
 
 function App() {
 
-  return (
-    <div>1</div>
-  )
+  return (<LowCodeEditor />)
 }
 
 export default App
