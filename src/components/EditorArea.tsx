@@ -1,29 +1,11 @@
-import React, { useEffect } from "react"
+import React from "react"
 
 import { IComponent, useComponentsStore } from "../stores/components"
 import { useComponentConfigStore } from "../stores/component-config"
 
 export function EditorArea() {
-    const { components, addComponent, updateComponent } = useComponentsStore()
+    const { components } = useComponentsStore()
     const { componentConfig } = useComponentConfigStore()
-
-    // useEffect(() => {
-    //     addComponent({
-    //         id: 222,
-    //         name: "Container",
-    //         props: {},
-    //         children: [],
-    //     }, 1)
-
-    //     addComponent({
-    //         id: 333,
-    //         name: 'Button',
-    //         props: {
-    //             text: '无敌'
-    //         },
-    //         children: []
-    //     }, 222);
-    // }, [])
 
     const renderComponents = (components: IComponent[]): React.ReactNode => {
         return components.map((component) => {
@@ -37,6 +19,7 @@ export function EditorArea() {
                 config.component,
                 {
                     key: component.id,
+                    id: component.id,
                     ...config.defaultProps,
                     ...component.props,
                 },

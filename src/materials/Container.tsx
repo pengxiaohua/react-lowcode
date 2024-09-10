@@ -1,9 +1,8 @@
-import { PropsWithChildren } from "react";
-
+import { ICommonComponentProps } from "./interface";
 import useMaterialsDrop from "../hooks/useMaterialsDrop";
 
-const Container = ({ children }: PropsWithChildren) => {
-    const { canDrop, drop } = useMaterialsDrop(['Button', 'Container'], 0);
+const Container = ({ id, children }: ICommonComponentProps) => {
+    const { canDrop, drop } = useMaterialsDrop(['Button', 'Container'], id);
 
     return (
         <div
