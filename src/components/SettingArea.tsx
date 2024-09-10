@@ -1,3 +1,9 @@
+import { useComponentsStore } from "../stores/components"
+
 export function SettingArea() {
-    return <div>SettingArea</div>
+    const { components } = useComponentsStore()
+
+    return <div>
+        {JSON.stringify(components, null, 2)}
+    </div>
 }

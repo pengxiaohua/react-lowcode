@@ -1,24 +1,20 @@
 import { PropsWithChildren } from "react";
-import { message } from "antd";
-import { useDrop } from 'react-dnd'
 
-function Page({ children }: PropsWithChildren) {
+import useMaterialsDrop from "../hooks/useMaterialsDrop";
 
-    const [{ canDrop }, drop] = useDrop(() => ({
-        accept: ['Button', 'Container'],
-        drop: (item: { type: string }) => {
-            message.success(item.type)
-        },
-        collect: (monitor) => ({
-            canDrop: monitor.canDrop(),
-        }),
-    }));
+interface ICommonComponentProps extends PropsWithChildren {
+    id: number;
+    name: string;
+    [key: string]: any;
+}
+
+function Page({ id, name, children }: ICommonComponentProps) {
+    const { drop, canDrop } = useMaterialsDrop(['Container', 'Button'], id);
 
     return (
         <div
             ref={drop}
-            className='p-[20px] h-[100%] box-border'
-            style={{ border: canDrop ? '2px solid blue' : 'none' }}
+            className={`min-h-[100px] p-[20px] ${canDrop ? 'border-[2px] border-[blue]' : 'border-[1px] border-[#000]'}`}
         >
             {children}
         </div>
