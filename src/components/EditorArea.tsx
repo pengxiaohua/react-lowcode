@@ -2,6 +2,7 @@ import React, { useState } from "react"
 
 import { IComponent, useComponentsStore } from "../stores/components"
 import { useComponentConfigStore } from "../stores/component-config"
+import HoverHighlight from "./HoverHighlight"
 
 export function EditorArea() {
     const { components } = useComponentsStore()
@@ -28,7 +29,7 @@ export function EditorArea() {
         })
     }
 
-    const [hoveredComponentId, setHoveredComponentId] = useState(0)
+    const [hoveredComponentId, setHoveredComponentId] = useState<number | undefined>(0)
 
     /**
      * 鼠标悬停事件处理函数
@@ -47,8 +48,21 @@ export function EditorArea() {
         }
     }
 
-    return <div className="h-[100%] editor-area" onMouseOver={handleMouseOver}>
-        {hoveredComponentId}
-        {renderComponents(components)}
-    </div>
+    return (
+        <div className="h-[100%] editor-area"
+            onMouseOver={handleMouseOver}
+            onMouseLeave={() => setHoveredComponentId(undefined)}
+        >
+            {renderComponents(components)}
+            {
+                hoveredComponentId &&
+                <HoverHighlight
+                    portalWrapperClassName="portal-wrapper"
+                    containerClassName="editor-area"
+                    componentId={hoveredComponentId}
+                />
+            }
+            <div className="portal-wrapper"></div>
+        </div>
+    )
 }
