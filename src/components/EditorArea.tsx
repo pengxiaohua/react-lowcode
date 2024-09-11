@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import { IComponent, useComponentsStore } from "../stores/components"
 import { useComponentConfigStore } from "../stores/component-config"
@@ -28,7 +28,27 @@ export function EditorArea() {
         })
     }
 
-    return <div className="h-[100%]">
+    const [hoveredComponentId, setHoveredComponentId] = useState(0)
+
+    /**
+     * 鼠标悬停事件处理函数
+     *
+     * @param e React鼠标事件对象
+     */
+    const handleMouseOver: React.MouseEventHandler<HTMLDivElement> = (e) => {
+        // 获取当前鼠标悬停的元素
+        const target = (e.target as HTMLElement).closest('[data-component-id]');
+        if (target) {
+            const componentId = target.getAttribute('data-component-id');
+            // 设置当前hover的组件ID, 为当前元素的data-component-id属性值
+            if (componentId) {
+                setHoveredComponentId(Number(componentId))
+            }
+        }
+    }
+
+    return <div className="h-[100%] editor-area" onMouseOver={handleMouseOver}>
+        {hoveredComponentId}
         {renderComponents(components)}
     </div>
 }
