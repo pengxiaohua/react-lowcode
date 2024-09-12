@@ -10,12 +10,15 @@ export interface IComponent {
 
 interface IState {
     components: IComponent[];
+    currentComponentId: number | null;
+    currentComponent: IComponent | null;
 }
 
 interface IAction {
     addComponent: (component: IComponent, parentId: number) => void;
     removeComponent: (componentId: number) => void;
     updateComponent: (componentId: number, props: any) => void;
+    setCurrentComponent: (componentId: number) => void;
 }
 
 export const useComponentsStore = create<IState & IAction>(
@@ -28,6 +31,11 @@ export const useComponentsStore = create<IState & IAction>(
                 desc: '页面'
             }
         ],
+        currentComponent: null,
+        currentComponentId: null,
+        setCurrentComponent: (componentId) => {
+
+        },
         addComponent: (component, parentId) =>
             set((state) => {
                 if (parentId) {

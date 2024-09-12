@@ -29,7 +29,7 @@ export function EditorArea() {
         })
     }
 
-    const [hoveredComponentId, setHoveredComponentId] = useState<number | undefined>(0)
+    const [hoveredComponentId, setHoveredComponentId] = useState<number | undefined>()
 
     /**
      * 鼠标悬停事件处理函数
