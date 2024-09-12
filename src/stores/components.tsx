@@ -16,9 +16,9 @@ interface IState {
 
 interface IAction {
     addComponent: (component: IComponent, parentId: number) => void;
-    removeComponent: (componentId: number) => void;
+    removeComponent: (componentId: number | null) => void;
     updateComponent: (componentId: number, props: any) => void;
-    setCurrentComponent: (componentId: number) => void;
+    setCurrentComponentId: (componentId: number | null) => void;
 }
 
 export const useComponentsStore = create<IState & IAction>(
@@ -33,8 +33,11 @@ export const useComponentsStore = create<IState & IAction>(
         ],
         currentComponent: null,
         currentComponentId: null,
-        setCurrentComponent: (componentId) => {
-
+        setCurrentComponentId: (componentId) => {
+            set((state) => ({
+                currentComponentId: componentId,
+                currentComponent: getComponentById(componentId, state.components)
+            }))
         },
         addComponent: (component, parentId) =>
             set((state) => {

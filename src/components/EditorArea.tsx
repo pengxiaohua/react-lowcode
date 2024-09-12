@@ -1,12 +1,29 @@
-import React, { useState } from "react"
+import React, { MouseEventHandler, useState } from "react"
 
 import { IComponent, useComponentsStore } from "../stores/components"
 import { useComponentConfigStore } from "../stores/component-config"
 import HoverHighlight from "./HoverHighlight"
+import SelectedHoverHighlight from "./SelectedHoverHighlight"
 
 export function EditorArea() {
-    const { components } = useComponentsStore()
+    const { components, currentComponentId, setCurrentComponentId } = useComponentsStore()
     const { componentConfig } = useComponentConfigStore()
+
+    const handleClick: MouseEventHandler = (e) => {
+        // 获取当前点击的元素
+        const path = e.nativeEvent.composedPath()
+
+        for (let i = 0; i < path.length; i++) {
+            const element = path[i] as HTMLElement
+
+            const componentId = element.dataset?.componentId
+
+            if (componentId) {
+                setCurrentComponentId(Number(componentId))
+                return;
+            }
+        }
+    }
 
     const renderComponents = (components: IComponent[]): React.ReactNode => {
         return components.map((component) => {
@@ -52,14 +69,23 @@ export function EditorArea() {
         <div className="h-[100%] editor-area"
             onMouseOver={handleMouseOver}
             onMouseLeave={() => setHoveredComponentId(undefined)}
+            onClick={handleClick}
         >
             {renderComponents(components)}
             {
-                hoveredComponentId &&
+                hoveredComponentId && hoveredComponentId !== currentComponentId &&
                 <HoverHighlight
                     portalWrapperClassName="portal-wrapper"
                     containerClassName="editor-area"
                     componentId={hoveredComponentId}
+                />
+            }
+            {
+                currentComponentId &&
+                <SelectedHoverHighlight
+                    portalWrapperClassName="portal-wrapper"
+                    containerClassName="editor-area"
+                    componentId={currentComponentId}
                 />
             }
             <div className="portal-wrapper"></div>
