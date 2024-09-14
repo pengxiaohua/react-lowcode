@@ -9,6 +9,12 @@ export function EditorArea() {
     const { components, currentComponentId, setCurrentComponentId } = useComponentsStore()
     const { componentConfig } = useComponentConfigStore()
 
+    /**
+     * 处理鼠标点击事件
+     *
+     * @param e 鼠标事件对象
+     * @returns 无返回值
+     */
     const handleClick: MouseEventHandler = (e) => {
         // 获取当前点击的元素
         const path = e.nativeEvent.composedPath()
