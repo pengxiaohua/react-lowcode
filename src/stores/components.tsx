@@ -4,6 +4,7 @@ export interface IComponent {
     id: number;
     name: string;
     props: any;
+    desc: string;
     children?: IComponent[];
     parentId?: number;
 }

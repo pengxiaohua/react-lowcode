@@ -20,6 +20,11 @@ const HoverHighlight = ({ portalWrapperClassName, containerClassName, componentI
         updatePosition();
     }, [componentId])
 
+    // 在 components 变化后调用 updatePosition 更新位置
+    useEffect(() => {
+        updatePosition();
+    }, [components])
+
     const updatePosition = () => {
         if (!componentId) {
             return;
@@ -105,7 +110,7 @@ const HoverHighlight = ({ portalWrapperClassName, containerClassName, componentI
                         whiteSpace: 'nowrap',
                     }}
                 >
-                    {currentComponent?.name}
+                    {currentComponent?.desc}
                 </div>
             </div>
         </>

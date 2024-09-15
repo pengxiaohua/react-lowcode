@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { DeleteOutlined } from '@ant-design/icons'
-import { Popconfirm, Space } from 'antd'
+import { Popconfirm, Space, Dropdown } from 'antd'
 
 import { useComponentsStore, getComponentById } from "../stores/components";
 
@@ -68,6 +68,22 @@ const SelectedHoverHighlight = ({ portalWrapperClassName, containerClassName, co
         return getComponentById(componentId, components);
     }, [componentId])
 
+    const parentComponents = useMemo(() => {
+        const parentComponents = [];
+        let component = currentComponent;
+
+        while (component?.parentId) {
+            component = getComponentById(component?.parentId!, components);
+            parentComponents.push(component);
+        }
+        return parentComponents
+    }, [currentComponent])
+
+    // 在 components 变化后调用 updatePosition 更新位置
+    useEffect(() => {
+        updatePosition();
+    }, [components])
+
     // 创建 portal 挂载的容器元素
     const element = useMemo(() => {
         const el = document.querySelector(`.${portalWrapperClassName}`) as Element | DocumentFragment;
@@ -104,18 +120,31 @@ const SelectedHoverHighlight = ({ portalWrapperClassName, containerClassName, co
                 }}
             >
                 <Space>
-                    <div
-                        style={{
-                            padding: '0 8px',
-                            backgroundColor: '#1890ff',
-                            borderRadius: 4,
-                            color: '#fff',
-                            cursor: "pointer",
-                            whiteSpace: 'nowrap',
+                    <Dropdown
+                        menu={{
+                            items: parentComponents.map(item => ({
+                                key: item?.id,
+                                label: item?.desc,
+                            })),
+                            onClick: ({ key }) => {
+                                setCurrentComponentId(Number(key));
+                            }
                         }}
+                        disabled={parentComponents.length === 0}
                     >
-                        {currentComponent?.name}
-                    </div>
+                        <div
+                            style={{
+                                padding: '0 8px',
+                                backgroundColor: '#1890ff',
+                                borderRadius: 4,
+                                color: '#fff',
+                                cursor: "pointer",
+                                whiteSpace: 'nowrap',
+                            }}
+                        >
+                            {currentComponent?.desc}
+                        </div>
+                    </Dropdown>
                     {
                         currentComponentId !== 1 && (
                             <div style={{ padding: '0 8px', backgroundColor: '#1890ff' }}>

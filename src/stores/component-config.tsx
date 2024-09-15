@@ -5,8 +5,9 @@ import Page from '../materials/Page';
 
 export interface IComponentConfig {
     name: string;
-    defaultProps: Record<string, any>,
-    component: any
+    defaultProps: Record<string, any>;
+    desc: string;
+    component: any;
 }
 
 interface IState {
@@ -23,6 +24,7 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
         Container: {
             name: 'Container',
             defaultProps: {},
+            desc: '容器',
             component: Container
         },
         Button: {
@@ -31,11 +33,13 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
                 type: 'primary',
                 text: '按钮'
             },
+            desc: '按钮',
             component: Button
         },
         Page: {
             name: 'Page',
             defaultProps: {},
+            desc: '页面',
             component: Page
         }
     },

@@ -16,13 +16,14 @@ const useMaterialsDrop = (accept: string[], id: number) => {
         return;
       }
 
-      const props = componentConfig[item.type].defaultProps;
+      const config = componentConfig[item.type];
 
       addComponent(
         {
           id: new Date().getTime(),
           name: item.type,
-          props,
+          desc: config.desc,
+          props: config.defaultProps,
         },
         id
       );
