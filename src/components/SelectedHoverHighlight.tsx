@@ -79,6 +79,17 @@ const SelectedHoverHighlight = ({ portalWrapperClassName, containerClassName, co
         return parentComponents
     }, [currentComponent])
 
+    // 监听窗口变化，处理缩小浏览器窗口导致的高亮框位置错误的问题
+    useEffect(() => {
+        const resizeHandler = () => {
+            updatePosition();
+        }
+        window.addEventListener('resize', resizeHandler)
+        return () => {
+            window.removeEventListener('resize', resizeHandler)
+        }
+    }, []);
+
     // 在 components 变化后调用 updatePosition 更新位置
     useEffect(() => {
         updatePosition();
