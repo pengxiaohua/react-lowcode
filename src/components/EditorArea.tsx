@@ -5,7 +5,7 @@ import { useComponentConfigStore } from "../stores/component-config"
 import HoverHighlight from "./HoverHighlight"
 import SelectedHoverHighlight from "./SelectedHoverHighlight"
 
-export function EditorArea() {
+const EditorArea = () => {
     const { components, currentComponentId, setCurrentComponentId } = useComponentsStore()
     const { componentConfig } = useComponentConfigStore()
 
@@ -98,3 +98,6 @@ export function EditorArea() {
         </div>
     )
 }
+
+
+export default EditorArea;

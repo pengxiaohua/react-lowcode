@@ -1,11 +1,10 @@
 import { Allotment } from "allotment";
 import 'allotment/dist/style.css';
 
-import { Header } from "../components/Header";
-import { EditorArea } from "../components/EditorArea";
-import { SettingArea } from "../components/SettingArea";
-import { MaterialArea } from "../components/MaterialArea";
-
+import Header from "../components/Header";
+import EditorArea from "../components/EditorArea";
+import SettingArea from "../components/SettingArea";
+import MaterialArea from "../components/MaterialArea";
 
 export default function LowCodeEditor() {
     return <div className='h-[100vh] w-[100vw] flex flex-col'>

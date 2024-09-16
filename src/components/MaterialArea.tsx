@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { useComponentConfigStore } from "../stores/component-config"
 import MaterialItem from "./MaterialItem"
 
-export function MaterialArea() {
+const MaterialArea = () => {
     const { componentConfig } = useComponentConfigStore()
 
     const components = useMemo(() => {
@@ -18,3 +18,5 @@ export function MaterialArea() {
         }
     </div>
 }
+
+export default MaterialArea;

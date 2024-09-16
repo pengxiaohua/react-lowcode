@@ -3,10 +3,18 @@ import Container from '../materials/Container';
 import Button from '../materials/Button';
 import Page from '../materials/Page';
 
+interface IComponentSetting {
+    name: string;
+    label: string;
+    type: string;
+    [key: string]: any;
+}
+
 export interface IComponentConfig {
     name: string;
     defaultProps: Record<string, any>;
     desc: string;
+    setting?: IComponentSetting[];
     component: any;
 }
 
@@ -33,6 +41,22 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
                 type: 'primary',
                 text: '按钮'
             },
+            setting: [
+                {
+                    name: 'type',
+                    label: '按钮类型',
+                    type: 'select',
+                    options: [
+                        { label: '主按钮', value: 'primary' },
+                        { label: '次按钮', value: 'default' },
+                    ],
+                },
+                {
+                    name: 'text',
+                    label: '文本',
+                    type: 'input',
+                }
+            ],
             desc: '按钮',
             component: Button
         },
