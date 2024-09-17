@@ -31,8 +31,6 @@ const SelectedHoverHighlight = ({ portalWrapperClassName, containerClassName, co
         const container = document.querySelector(`.${containerClassName}`);
         const node = document.querySelector(`[data-component-id="${componentId}"]`)
 
-        console.log({ container, node });
-
         if (!container || !node) {
             return;
         }

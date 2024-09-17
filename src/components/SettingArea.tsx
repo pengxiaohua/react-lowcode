@@ -15,7 +15,7 @@ const SettingArea = () => {
     return (
         <div className="setting">
             <Segmented value={key} onChange={setKey} block options={['属性', '样式', '事件']} />
-            <div>
+            <div className="pt-[20px]">
                 {
                     key === '属性' && <SettingAttr />
                 }

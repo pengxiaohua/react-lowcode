@@ -3,7 +3,7 @@ import Container from '../materials/Container';
 import Button from '../materials/Button';
 import Page from '../materials/Page';
 
-interface IComponentSetting {
+export interface IComponentSetting {
     name: string;
     label: string;
     type: string;
@@ -15,6 +15,7 @@ export interface IComponentConfig {
     defaultProps: Record<string, any>;
     desc: string;
     setting?: IComponentSetting[];
+    styleSetting?: IComponentSetting[];
     component: any;
 }
 
@@ -55,6 +56,18 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
                     name: 'text',
                     label: '文本',
                     type: 'input',
+                }
+            ],
+            styleSetting: [
+                {
+                    name: 'width',
+                    label: '宽度',
+                    type: 'inputNumber'
+                },
+                {
+                    name: 'height',
+                    label: '高度',
+                    type: 'inputNumber'
                 }
             ],
             desc: '按钮',

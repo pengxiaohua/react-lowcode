@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { create } from 'zustand';
 
 export interface IComponent {
@@ -5,6 +6,7 @@ export interface IComponent {
     name: string;
     props: any;
     desc: string;
+    styles?: CSSProperties
     children?: IComponent[];
     parentId?: number;
 }
@@ -19,6 +21,7 @@ interface IAction {
     addComponent: (component: IComponent, parentId: number) => void;
     removeComponent: (componentId: number | null) => void;
     updateComponent: (componentId: number, props: any) => void;
+    updateStyles: (componentId: number, styles: CSSProperties) => void;
     setCurrentComponentId: (componentId: number | null) => void;
 }
 
@@ -86,7 +89,19 @@ export const useComponentsStore = create<IState & IAction>(
                 }
 
                 return { components: [...state.components] };
-            })
+            }),
+        updateStyles: (componentId, styles) =>
+            set((state) => {
+                const component = getComponentById(componentId, state.components);
+
+                if (component) {
+                    component.styles = { ...component.styles, ...styles };
+
+                    return { components: [...state.components] };
+                }
+
+                return { components: [...state.components] };
+            }),
     })
 );
 
