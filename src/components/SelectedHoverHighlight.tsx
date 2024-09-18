@@ -20,7 +20,9 @@ const SelectedHoverHighlight = ({ portalWrapperClassName, containerClassName, co
     const { components, currentComponentId, removeComponent, setCurrentComponentId } = useComponentsStore();
 
     useEffect(() => {
-        updatePosition();
+        setTimeout(() => {
+            updatePosition();
+        }, 200);
     }, [componentId])
 
     const updatePosition = () => {

@@ -25,7 +25,7 @@ const useMaterialsDrop = (accept: string[], id: number) => {
           desc: config.desc,
           props: config.defaultProps,
           styles: {
-            background: 'green',
+            // background: 'green',
           },
         },
         id

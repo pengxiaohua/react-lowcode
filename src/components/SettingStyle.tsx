@@ -1,22 +1,44 @@
+import { CSSProperties, useEffect, useState } from 'react';
 import { Form, Input, InputNumber, Select } from 'antd';
-import { CSSProperties, useEffect } from 'react';
+import { debounce } from 'lodash-es'
+import styleToObject from 'style-to-object'
 
+import CSSEditor from './CSSEditor';
 import { IComponentSetting, useComponentConfigStore } from '../stores/component-config';
 import { useComponentsStore } from '../stores/components';
 
 const SettingStyle = () => {
-
+    const [css, setCss] = useState<string>(`.comp{\n\n}`);
     const [form] = Form.useForm();
 
     const { currentComponent, currentComponentId, updateStyles } = useComponentsStore();
     const { componentConfig } = useComponentConfigStore();
 
     useEffect(() => {
+        form.resetFields();
+
         const data = form.getFieldsValue();
         form.setFieldsValue({ ...data, ...currentComponent?.styles });
+
+        setCss(toCssString(currentComponent?.styles!))
     }, [currentComponent])
 
-    console.log({ currentComponentId, currentComponent });
+    const toCssString = (css: Record<string, any>) => {
+        let str = `.comp {\n`;
+        for (let key in css) {
+            let value = css[key];
+
+            if (!value) {
+                continue;
+            }
+            if (['width', 'height'].includes(key) && !value.toString().endsWith('px')) {
+                value += 'px';
+            }
+            str += `\t${key}: ${value};\n`
+        }
+        str += `}`;
+        return str;
+    }
 
 
     if (!currentComponentId || !currentComponent) return null;
@@ -39,6 +61,24 @@ const SettingStyle = () => {
         }
     }
 
+    const handleEditorChange = debounce((value: string) => {
+        setCss(value);
+
+        let css: Record<string, any> = {};
+
+        try {
+            const cssStr = value.replace(/\/\*.*\*\//, '') // 去掉注释 /** */
+                .replace(/(\.?[^{]+{)/, '') // 去掉 .comp {
+                .replace('}', '');// 去掉 }
+
+            styleToObject(cssStr, (name, value) => {
+                css[name.replace(/-\w/, (item) => item.toUpperCase().replace('-', ''))] = value;
+            });
+
+            updateStyles(currentComponentId, { ...form.getFieldsValue(), ...css }, true);
+        } catch (e) { }
+    }, 500)
+
     return (
         <Form
             form={form}
@@ -53,9 +93,11 @@ const SettingStyle = () => {
                     </Form.Item>
                 ))
             }
+            <div className='h-[200px] border-[1px] border-[#ccc]'>
+                <CSSEditor value={`.comp{\n\n}`} onChange={handleEditorChange} />
+            </div>
         </Form>
     )
 }
-
 
 export default SettingStyle;

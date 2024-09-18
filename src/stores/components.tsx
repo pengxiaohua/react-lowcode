@@ -21,7 +21,7 @@ interface IAction {
     addComponent: (component: IComponent, parentId: number) => void;
     removeComponent: (componentId: number | null) => void;
     updateComponent: (componentId: number, props: any) => void;
-    updateStyles: (componentId: number, styles: CSSProperties) => void;
+    updateStyles: (componentId: number, styles: CSSProperties, replace?: boolean) => void;
     setCurrentComponentId: (componentId: number | null) => void;
 }
 
@@ -90,12 +90,12 @@ export const useComponentsStore = create<IState & IAction>(
 
                 return { components: [...state.components] };
             }),
-        updateStyles: (componentId, styles) =>
+        updateStyles: (componentId, styles, replace) =>
             set((state) => {
                 const component = getComponentById(componentId, state.components);
 
                 if (component) {
-                    component.styles = { ...component.styles, ...styles };
+                    component.styles = replace ? { ...styles } : { ...component.styles, ...styles };
 
                     return { components: [...state.components] };
                 }
