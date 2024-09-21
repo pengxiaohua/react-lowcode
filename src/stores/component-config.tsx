@@ -1,7 +1,10 @@
 import { create } from 'zustand';
-import Container from '../materials/Container';
-import Button from '../materials/Button';
-import Page from '../materials/Page';
+import ContainerEdit from '../materials/ContainerEdit';
+import ContainerPreview from '../materials/ContainerPreview';
+import ButtonEdit from '../materials/ButtonEdit';
+import ButtonPreview from '../materials/ButtonPreview';
+import PageEdit from '../materials/PageEdit';
+import PagePreview from '../materials/PagePreview';
 
 export interface IComponentSetting {
     name: string;
@@ -16,7 +19,9 @@ export interface IComponentConfig {
     desc: string;
     setting?: IComponentSetting[];
     styleSetting?: IComponentSetting[];
-    component: any;
+    // component: any;
+    edit: any;
+    preview: any;
 }
 
 interface IState {
@@ -34,7 +39,9 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
             name: 'Container',
             defaultProps: {},
             desc: '容器',
-            component: Container
+            // component: Container
+            edit: ContainerEdit,
+            preview: ContainerPreview
         },
         Button: {
             name: 'Button',
@@ -71,13 +78,17 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
                 }
             ],
             desc: '按钮',
-            component: Button
+            // component: Button
+            edit: ButtonEdit,
+            preview: ButtonPreview
         },
         Page: {
             name: 'Page',
             defaultProps: {},
             desc: '页面',
-            component: Page
+            // component: Page
+            edit: PageEdit,
+            preview: PagePreview
         }
     },
     // 注册组件，组件名不能重复

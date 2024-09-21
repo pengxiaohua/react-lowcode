@@ -36,11 +36,13 @@ const EditorArea = () => {
 
             const config = componentConfig?.[component.name]
 
-            if (!componentConfig[component.name]) return null
+            // if (!componentConfig[component.name]) return null
+            if (!config.edit) return null
 
             // 这里可以自定义组件的渲染方式
             return React.createElement(
-                config.component,
+                // config.component,
+                config.edit,
                 {
                     key: component.id,
                     id: component.id,
