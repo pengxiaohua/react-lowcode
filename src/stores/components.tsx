@@ -13,6 +13,7 @@ export interface IComponent {
 
 interface IState {
     components: IComponent[];
+    mode: 'edit' | 'preview';
     currentComponentId: number | null;
     currentComponent: IComponent | null;
 }
@@ -23,6 +24,7 @@ interface IAction {
     updateComponent: (componentId: number, props: any) => void;
     updateStyles: (componentId: number, styles: CSSProperties, replace?: boolean) => void;
     setCurrentComponentId: (componentId: number | null) => void;
+    setMode: (mode: IState['mode']) => void;
 }
 
 export const useComponentsStore = create<IState & IAction>(
@@ -37,6 +39,8 @@ export const useComponentsStore = create<IState & IAction>(
         ],
         currentComponent: null,
         currentComponentId: null,
+        mode: 'edit',
+        setMode: (mode) => set({ mode }),
         setCurrentComponentId: (componentId) => {
             set((state) => ({
                 currentComponentId: componentId,
