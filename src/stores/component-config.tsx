@@ -13,6 +13,11 @@ export interface IComponentSetting {
     [key: string]: any;
 }
 
+export interface IComponentEvent {
+    name: string
+    label: string
+}
+
 export interface IComponentConfig {
     name: string;
     defaultProps: Record<string, any>;
@@ -22,6 +27,7 @@ export interface IComponentConfig {
     // component: any;
     edit: any;
     preview: any;
+    events?: IComponentEvent[];
 }
 
 interface IState {
@@ -76,6 +82,16 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
                     label: '高度',
                     type: 'inputNumber'
                 }
+            ],
+            events: [
+                {
+                    name: 'onClick',
+                    label: '点击事件'
+                },
+                {
+                    name: 'onDoubleClick',
+                    label: '双击事件'
+                },
             ],
             desc: '按钮',
             // component: Button
