@@ -1,13 +1,18 @@
-import { Collapse, Input, Select, CollapseProps } from 'antd'
+import { useState } from 'react';
+import { Collapse, Input, Button, Select, CollapseProps } from 'antd'
 
 import { useComponentsStore } from '../stores/components';
-import { useComponentConfigStore } from '../stores/component-config';
+import { IComponentEvent, useComponentConfigStore } from '../stores/component-config';
 import { GoToLink } from './SettingGoToLink';
 import { ShowMessage } from './SettingShowMessage';
+import ActionModal from './ActionModal';
 
 const SettingEvent = () => {
     const { currentComponentId, currentComponent, updateComponent } = useComponentsStore();
     const { componentConfig } = useComponentConfigStore();
+
+    const [actionModalOpen, setActionModalOpen] = useState(false)
+    const [currentEvent, setCurrentEvent] = useState<IComponentEvent>()
 
     const selectAction = (name: string, type: string) => {
         if (!currentComponentId) return
@@ -31,7 +36,13 @@ const SettingEvent = () => {
     const items: CollapseProps['items'] = (componentConfig[currentComponent.name].events || []).map(event => {
         return {
             key: event.name,
-            label: event.label,
+            label: <div className='flex justify-between leading-[30px]'>
+                {event.label}
+                <Button type="primary" onClick={() => {
+                    setCurrentEvent(event);
+                    setActionModalOpen(true);
+                }}>添加动作</Button>
+            </div>,
             children: (
                 <div>
                     <div className='flex items-center'>
@@ -66,6 +77,11 @@ const SettingEvent = () => {
     return (
         <div className='px-[10px]'>
             <Collapse items={items} className='mb-[10px]' />
+            <ActionModal visible={actionModalOpen} eventConfig={currentEvent!} handleOk={() => {
+                setActionModalOpen(false)
+            }} handleCancel={() => {
+                setActionModalOpen(false)
+            }} />
         </div>
     )
 }
