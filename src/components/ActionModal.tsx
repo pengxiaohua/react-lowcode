@@ -30,11 +30,16 @@ const ActionModal = (props: IActionModal) => {
             <div className="h-[500px]">
                 <Segmented value={key} onChange={setKey} block options={['访问链接', '消息提示', '自定义 JS']} />
                 {
-                    key === '访问链接' && <GoToLink event={eventConfig} />
+                    key === '访问链接' &&
+                    <GoToLink onChange={(config) => {
+                        console.log(config);
+                    }} />
                 }
                 {
-                    key === '消息提示' && <ShowMessage event={eventConfig} />
-                }
+                    key === '消息提示' &&
+                    <ShowMessage onChange={(config) => {
+                        console.log(config);
+                    }} />}
             </div>
         </Modal >
     )
