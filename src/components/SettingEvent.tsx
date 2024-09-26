@@ -38,7 +38,8 @@ const SettingEvent = () => {
             key: event.name,
             label: <div className='flex justify-between leading-[30px]'>
                 {event.label}
-                <Button type="primary" onClick={() => {
+                <Button type="primary" onClick={(e) => {
+                    e.stopPropagation()
                     setCurrentEvent(event);
                     setActionModalOpen(true);
                 }}>添加动作</Button>
