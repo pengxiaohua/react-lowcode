@@ -3,8 +3,8 @@ import { Collapse, Input, Button, Select, CollapseProps } from 'antd'
 
 import { useComponentsStore } from '../stores/components';
 import { IComponentEvent, useComponentConfigStore } from '../stores/component-config';
-import { GoToLink } from './SettingGoToLink';
-import { ShowMessage } from './SettingShowMessage';
+import { GoToLink, IGoToLinkProps } from './SettingGoToLink';
+import { IShowMessageProps, ShowMessage } from './SettingShowMessage';
 import ActionModal from './ActionModal';
 
 const SettingEvent = () => {
@@ -45,44 +45,61 @@ const SettingEvent = () => {
                 }}>添加动作</Button>
             </div>,
             children: (
-                <div>
-                    <div className='flex items-center'>
-                        <div>动作：</div>
-                        <Select
-                            className='w-[160px]'
-                            value={currentComponent?.props?.[event.name]?.type}
-                            options={[
-                                { label: '显示提示', value: 'showMessage' },
-                                { label: '跳转链接', value: 'goToLink' }
-                            ]}
-                            onChange={
-                                (value) => selectAction(event.name, value)
-                            }
-                        />
-                    </div>
+                <div key={event.name}>
                     {
-                        currentComponent?.props?.[event.name]?.type === 'goToLink' && (
-                            <GoToLink event={event} />
-                        )
-                    }
-                    {
-                        currentComponent?.props?.[event.name]?.type === 'showMessage' && (
-                            <ShowMessage event={event} />
-                        )
+                        (currentComponent?.props[event.name]?.actions || []).map((item: IGoToLinkProps | IShowMessageProps) => {
+                            return <div key={item.text}>
+                                {
+                                    item.type === 'goToLink' ? <div className='border border-[#aaa] m-[10px] p-[10px]'>
+                                        <div className='text-[blue]'>跳转链接</div>
+                                        <div>{item.url}</div>
+                                    </div> : null
+                                }
+                                {
+                                    item.type === 'showMessage' ? <div className='border border-[#aaa] m-[10px] p-[10px]'>
+                                        <div className='text-[blue]'>消息弹窗</div>
+                                        <div>{item.config.type}</div>
+                                        <div>{item.config.text}</div>
+                                    </div> : null
+                                }
+                            </div>
+                        })
                     }
                 </div>
             )
         }
     })
 
+    const handleModalOk = (config?: IGoToLinkProps | IShowMessageProps) => {
+        console.log({ config, currentComponentId });
+
+        if (!config || !currentEvent || !currentComponent) return
+
+        updateComponent(currentComponentId, {
+            [currentEvent.name]: {
+                actions: [
+                    ...(currentComponent?.props?.[currentEvent.name]?.actions || []),
+                    config
+                ]
+            }
+        })
+
+        setActionModalOpen(false)
+    }
+
+    console.log({ actionModalOpen });
+
+
     return (
         <div className='px-[10px]'>
-            <Collapse items={items} className='mb-[10px]' />
-            <ActionModal visible={actionModalOpen} eventConfig={currentEvent!} handleOk={() => {
-                setActionModalOpen(false)
-            }} handleCancel={() => {
-                setActionModalOpen(false)
-            }} />
+            <Collapse items={items} className='mb-[10px]' defaultActiveKey={componentConfig[currentComponent?.name].events?.map(item => item.name)} />
+            <ActionModal
+                visible={actionModalOpen}
+                eventConfig={currentEvent!}
+                handleOk={handleModalOk}
+                handleCancel={() => {
+                    setActionModalOpen(false)
+                }} />
         </div>
     )
 }

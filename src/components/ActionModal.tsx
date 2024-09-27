@@ -1,21 +1,20 @@
 import { useState } from "react";
 import { Modal, Segmented } from "antd";
 
-import { GoToLink } from "./SettingGoToLink";
-import { ShowMessage } from "./SettingShowMessage";
-import { IComponentEvent } from "../stores/component-config";
+import { GoToLink, IGoToLinkProps } from "./SettingGoToLink";
+import { IShowMessageProps, ShowMessage } from "./SettingShowMessage";
 
 interface IActionModal {
     visible: boolean;
-    eventConfig: IComponentEvent
-    handleOk: () => void;
+    handleOk: (config?: IGoToLinkProps | IShowMessageProps) => void;
     handleCancel: () => void;
 }
 
 const ActionModal = (props: IActionModal) => {
-    const { visible, eventConfig, handleOk, handleCancel } = props;
+    const { visible, handleOk, handleCancel } = props;
 
     const [key, setKey] = useState<string>('访问链接');
+    const [currentConfig, setCurrentConfig] = useState<IGoToLinkProps | IShowMessageProps>();
 
     return (
         <Modal
@@ -24,7 +23,7 @@ const ActionModal = (props: IActionModal) => {
             open={visible}
             okText='添加'
             cancelText='取消'
-            onOk={handleOk}
+            onOk={() => handleOk(currentConfig)}
             onCancel={handleCancel}
         >
             <div className="h-[500px]">
@@ -32,13 +31,13 @@ const ActionModal = (props: IActionModal) => {
                 {
                     key === '访问链接' &&
                     <GoToLink onChange={(config) => {
-                        console.log(config);
+                        setCurrentConfig(config as IGoToLinkProps);
                     }} />
                 }
                 {
                     key === '消息提示' &&
                     <ShowMessage onChange={(config) => {
-                        console.log(config);
+                        setCurrentConfig(config as IGoToLinkProps);
                     }} />}
             </div>
         </Modal >
