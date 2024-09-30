@@ -63,6 +63,7 @@ const HoverHighlight = ({ portalWrapperClassName, containerClassName, componentI
         return getComponentById(componentId, components);
     }, [componentId])
 
+
     // 创建 portal 挂载的容器元素
     const element = useMemo(() => {
         const el = document.querySelector(`.${portalWrapperClassName}`) as Element | DocumentFragment;
