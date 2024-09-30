@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Collapse, Input, Button, Select, CollapseProps } from 'antd'
+import { Collapse, Button, CollapseProps } from 'antd'
+import { DeleteOutlined } from '@ant-design/icons';
 
 import { useComponentsStore } from '../stores/components';
 import { IComponentEvent, useComponentConfigStore } from '../stores/component-config';
-import { GoToLink, IGoToLinkProps } from './SettingGoToLink';
-import { IShowMessageProps, ShowMessage } from './SettingShowMessage';
+import { IGoToLinkProps } from './SettingGoToLink';
+import { IShowMessageProps } from './SettingShowMessage';
 import ActionModal from './ActionModal';
 
 const SettingEvent = () => {
@@ -14,22 +15,14 @@ const SettingEvent = () => {
     const [actionModalOpen, setActionModalOpen] = useState(false)
     const [currentEvent, setCurrentEvent] = useState<IComponentEvent>()
 
-    const selectAction = (name: string, type: string) => {
+    const handleDelete = (event: IComponentEvent, index: number) => {
         if (!currentComponentId) return
 
-        updateComponent(currentComponentId, {
-            [name]: { type }
-        })
-    }
-
-    const urlChange = (eventName: string, value: string) => {
-        if (!currentComponentId) return
+        const actions = currentComponent?.props?.[event.name]?.actions || [];
+        actions.splice(index, 1)
 
         updateComponent(currentComponentId, {
-            [eventName]: {
-                ...currentComponent?.props?.[eventName],
-                url: value
-            }
+            [event.name]: { actions }
         })
     }
 
@@ -47,19 +40,31 @@ const SettingEvent = () => {
             children: (
                 <div key={event.name}>
                     {
-                        (currentComponent?.props[event.name]?.actions || []).map((item: IGoToLinkProps | IShowMessageProps) => {
+                        (currentComponent?.props[event.name]?.actions || []).map((item: IGoToLinkProps | IShowMessageProps, index: number) => {
                             return <div key={item.text}>
                                 {
-                                    item.type === 'goToLink' ? <div className='border border-[#aaa] m-[10px] p-[10px]'>
+                                    item.type === 'goToLink' ? <div className='border border-[#aaa] m-[10px] p-[10px] relative'>
                                         <div className='text-[blue]'>跳转链接</div>
                                         <div>{item.url}</div>
+                                        <div
+                                            style={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }}
+                                            onClick={() => handleDelete(event, index)}
+                                        >
+                                            <DeleteOutlined />
+                                        </div>
                                     </div> : null
                                 }
                                 {
-                                    item.type === 'showMessage' ? <div className='border border-[#aaa] m-[10px] p-[10px]'>
+                                    item.type === 'showMessage' ? <div className='border border-[#aaa] m-[10px] p-[10px] relative'>
                                         <div className='text-[blue]'>消息弹窗</div>
                                         <div>{item.config.type}</div>
                                         <div>{item.config.text}</div>
+                                        <div
+                                            style={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }}
+                                            onClick={() => handleDelete(event, index)}
+                                        >
+                                            <DeleteOutlined />
+                                        </div>
                                     </div> : null
                                 }
                             </div>

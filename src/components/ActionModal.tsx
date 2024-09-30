@@ -24,6 +24,7 @@ const ActionModal = (props: IActionModal) => {
             okText='添加'
             cancelText='取消'
             onOk={() => handleOk(currentConfig)}
+            destroyOnClose
             onCancel={handleCancel}
         >
             <div className="h-[500px]">
