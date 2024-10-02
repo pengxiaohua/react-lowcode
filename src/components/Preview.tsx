@@ -29,6 +29,9 @@ const Preview = () => {
                             } else if (actions.config.type === 'error') {
                                 message.error(actions.config.text)
                             }
+                        } else if (actions.type === 'customJS') {
+                            const fn = new Function(actions.code);
+                            fn();
                         }
                     })
                 };
