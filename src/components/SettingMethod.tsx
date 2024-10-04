@@ -55,8 +55,6 @@ const SettingMethod = (props: IComponentMethodProps) => {
         })
     }
 
-    console.log({ componentConfig, selectedComponent }, componentConfig[selectedComponent?.name || '']);
-
     return (
         <div className="mt-[40px]">
             <div className="flex items-center gap-[10px]">
