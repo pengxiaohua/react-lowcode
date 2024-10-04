@@ -3,7 +3,7 @@ import { Input, Select } from "antd"
 
 import { useComponentsStore } from "../stores/components";
 
-export interface ShowMessageConfig {
+export interface IShowMessageConfig {
     type: 'showMessage',
     config: {
         type: 'success' | 'error'
@@ -12,12 +12,12 @@ export interface ShowMessageConfig {
 }
 
 export interface IShowMessageProps {
-    value?: ShowMessageConfig['config']
-    defaultValue?: ShowMessageConfig['config']
-    onChange?: (config: ShowMessageConfig) => void
+    value?: IShowMessageConfig['config']
+    defaultValue?: IShowMessageConfig['config']
+    onChange?: (config: IShowMessageConfig) => void
 }
 
-export function ShowMessage(props: IShowMessageProps) {
+const ShowMessage = (props: IShowMessageProps) => {
     const { value: val, defaultValue, onChange } = props;
 
     const [type, setType] = useState<'success' | 'error'>(defaultValue?.type || 'success');
@@ -87,3 +87,5 @@ export function ShowMessage(props: IShowMessageProps) {
         </div>
     </div>
 }
+
+export default ShowMessage;

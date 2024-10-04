@@ -3,7 +3,7 @@ import TextArea from "antd/es/input/TextArea";
 
 import { useComponentsStore } from "../stores/components";
 
-export interface GoToLinkConfig {
+export interface IGoToLinkConfig {
     type: 'goToLink',
     url: string
 }
@@ -11,10 +11,10 @@ export interface GoToLinkConfig {
 export interface IGoToLinkProps {
     value?: string
     defaultValue?: string
-    onChange?: (config: GoToLinkConfig) => void
+    onChange?: (config: IGoToLinkConfig) => void
 }
 
-export function GoToLink(props: IGoToLinkProps) {
+const GoToLink = (props: IGoToLinkProps) => {
     const { defaultValue, onChange, value: val } = props;
 
     const [value, setValue] = useState(defaultValue);
@@ -49,3 +49,5 @@ export function GoToLink(props: IGoToLinkProps) {
         </div>
     </div>
 }
+
+export default GoToLink;

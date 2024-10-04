@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import { message } from 'antd'
 
 import { useComponentConfigStore } from "../stores/component-config";
 import { useComponentsStore, IComponent } from '../stores/components'
-import { IGoToLinkProps } from "./SettingGoToLink";
-import { IShowMessageProps } from "./SettingShowMessage";
+import { IActionConfig } from "./ActionModal";
 
 const Preview = () => {
     const { components } = useComponentsStore();
     const { componentConfig } = useComponentConfigStore();
+
+    const componentRefs = useRef<Record<string, any>>({});
 
     const handleEvent = (component: IComponent) => {
         const props: Record<string, any> = {};
@@ -17,20 +18,24 @@ const Preview = () => {
             const eventConfig = component.props[event.name];
 
             if (eventConfig) {
-                const { type } = eventConfig;
-
                 props[event.name] = () => {
-                    eventConfig?.actions?.forEach((actions: IGoToLinkProps | IShowMessageProps) => {
-                        if (type === "goToLink" && actions.url) {
-                            window.location.href = actions.url;
-                        } else if (type === 'showMessage' && actions.config) {
-                            if (actions.config.type === 'success') {
-                                message.success(actions.config.text)
-                            } else if (actions.config.type === 'error') {
-                                message.error(actions.config.text)
+                    eventConfig?.actions?.forEach((action: IActionConfig) => {
+                        if (action.type === "goToLink" && action.url) {
+                            window.location.href = action.url;
+                        } else if (action.type === 'showMessage') {
+                            if (action.config.type === 'success') {
+                                message.success(action.config.text)
+                            } else if (action.config.type === 'error') {
+                                message.error(action.config.text)
                             }
-                        } else if (actions.type === 'customJS') {
-                            const fn = new Function(actions.code);
+                        } else if (action.type === 'method') {
+                            const component = componentRefs.current[action.config.componentId];
+
+                            if (component) {
+                                component[action.config.method]?.();
+                            }
+                        } else if (action.type === 'customJS') {
+                            const fn = new Function(action.code);
                             fn();
                         }
                     })
@@ -54,6 +59,7 @@ const Preview = () => {
                     id: component.id,
                     name: component.name,
                     styles: component.styles,
+                    ref: (ref: Record<string, any>) => { componentRefs.current[component.id] = ref; },
                     ...config.defaultProps,
                     ...component.props,
                     ...handleEvent(component),

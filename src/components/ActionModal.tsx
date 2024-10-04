@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
 import { Modal, Segmented } from "antd";
 
-import SettingCommon from "./SettingCustom";
-import { GoToLink, IGoToLinkProps } from "./SettingGoToLink";
-import { IShowMessageProps, ShowMessage } from "./SettingShowMessage";
-import { ICustomJSConfig } from "./SettingCustom";
+import GoToLink, { IGoToLinkConfig } from "./SettingGoToLink";
+import ShowMessage, { IShowMessageConfig } from "./SettingShowMessage";
+import SettingCommon, { ICustomJSConfig } from "./SettingCustom";
+import SettingMethod, { IComponentMethodConfig } from "./SettingMethod";
 
-interface IActionModal {
+export type IActionConfig = IGoToLinkConfig | IShowMessageConfig | ICustomJSConfig | IComponentMethodConfig
+interface IActionModalProps {
     visible: boolean;
     action: IActionConfig
-    handleOk: (config?: IGoToLinkProps | IShowMessageProps) => void;
+    handleOk: (config?: IActionConfig) => void;
     handleCancel: () => void;
 }
 
-export type IActionConfig = IGoToLinkProps | IShowMessageProps | ICustomJSConfig
-
-const ActionModal = (props: IActionModal) => {
+const ActionModal = (props: IActionModalProps) => {
     const { visible, handleOk, handleCancel, action } = props;
 
     const map = {
         goToLink: '访问链接',
         showMessage: '消息提示',
-        customJS: '自定义 JS'
+        customJS: '自定义 JS',
+        method: '组件方法'
     }
 
     const [key, setKey] = useState<string>('访问链接');
@@ -45,12 +45,13 @@ const ActionModal = (props: IActionModal) => {
             onCancel={handleCancel}
         >
             <div className="h-[500px]">
-                <Segmented value={key} onChange={setKey} block options={['访问链接', '消息提示', '自定义 JS']} />
+                <Segmented value={key} onChange={setKey} block options={['访问链接', '消息提示', '组件方法', '自定义 JS']} />
                 {
                     key === '访问链接' &&
                     <GoToLink
+                        key='goToLink'
                         onChange={(config) => {
-                            setCurrentConfig(config as IGoToLinkProps);
+                            setCurrentConfig(config);
                         }}
                         value={action?.type === 'goToLink' ? action?.url : ''}
                     />
@@ -58,17 +59,29 @@ const ActionModal = (props: IActionModal) => {
                 {
                     key === '消息提示' &&
                     <ShowMessage
+                        key='showMessage'
                         onChange={(config) => {
-                            setCurrentConfig(config as IShowMessageProps);
+                            setCurrentConfig(config);
                         }}
                         value={action?.type === 'showMessage' ? action?.config : undefined}
                     />
                 }
                 {
+                    key === '组件方法' &&
+                    <SettingMethod
+                        key="method"
+                        onChange={(config) => {
+                            setCurrentConfig(config);
+                        }}
+                        value={action?.type === 'method' ? action?.config : undefined}
+                    />
+                }
+                {
                     key === '自定义 JS' &&
                     <SettingCommon
+                        key="customJS"
                         onChange={(config) => {
-                            setCurrentConfig(config as ICustomJSConfig);
+                            setCurrentConfig(config);
                         }}
                         value={action?.type === 'customJS' ? action?.code : ''}
                     />

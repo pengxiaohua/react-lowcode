@@ -5,6 +5,8 @@ import ButtonEdit from '../materials/ButtonEdit';
 import ButtonPreview from '../materials/ButtonPreview';
 import PageEdit from '../materials/PageEdit';
 import PagePreview from '../materials/PagePreview';
+import ModalEdit from '../materials/ModalEdit';
+import ModalPreview from '../materials/ModalPreview';
 
 export interface IComponentSetting {
     name: string;
@@ -14,6 +16,11 @@ export interface IComponentSetting {
 }
 
 export interface IComponentEvent {
+    name: string
+    label: string
+}
+
+export interface IComponentMethodProps {
     name: string
     label: string
 }
@@ -28,6 +35,7 @@ export interface IComponentConfig {
     edit: any;
     preview: any;
     events?: IComponentEvent[];
+    methods?: IComponentMethodProps[]
 }
 
 interface IState {
@@ -97,6 +105,43 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
             // component: Button
             edit: ButtonEdit,
             preview: ButtonPreview
+        },
+        Modal: {
+            name: 'Modal',
+            defaultProps: {
+                title: '弹窗'
+            },
+            setting: [
+                {
+                    name: 'title',
+                    label: '标题',
+                    type: 'input'
+                }
+            ],
+            styleSetting: [],
+            events: [
+                {
+                    name: 'onOk',
+                    label: '确认事件',
+                },
+                {
+                    name: 'onCancel',
+                    label: '取消事件'
+                },
+            ],
+            methods: [
+                {
+                    name: 'open',
+                    label: '打开弹窗',
+                },
+                {
+                    name: 'close',
+                    label: '关闭弹窗'
+                },
+            ],
+            desc: '弹窗',
+            edit: ModalEdit,
+            preview: ModalPreview
         },
         Page: {
             name: 'Page',

@@ -2,14 +2,12 @@ import { useState } from 'react';
 import { Collapse, Button, CollapseProps } from 'antd'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
-import { useComponentsStore } from '../stores/components';
+import { getComponentById, useComponentsStore } from '../stores/components';
 import { IComponentEvent, useComponentConfigStore } from '../stores/component-config';
-import { IGoToLinkProps } from './SettingGoToLink';
-import { IShowMessageProps } from './SettingShowMessage';
 import ActionModal, { IActionConfig } from './ActionModal';
 
 const SettingEvent = () => {
-    const { currentComponentId, currentComponent, updateComponent } = useComponentsStore();
+    const { currentComponentId, currentComponent, updateComponent, components } = useComponentsStore();
     const { componentConfig } = useComponentConfigStore();
 
     const [actionModalOpen, setActionModalOpen] = useState(false)
@@ -55,8 +53,8 @@ const SettingEvent = () => {
             children: (
                 <div key={event.name}>
                     {
-                        (currentComponent?.props[event.name]?.actions || []).map((item: IGoToLinkProps | IShowMessageProps, index: number) => {
-                            return <div key={item.value}>
+                        (currentComponent?.props[event.name]?.actions || []).map((item: IActionConfig, index: number) => {
+                            return <div>
                                 {
                                     item.type === 'goToLink' ? <div className='border border-[#aaa] m-[10px] p-[10px] relative'>
                                         <div className='text-[blue]'>跳转链接</div>
@@ -86,6 +84,24 @@ const SettingEvent = () => {
                                         </div>
                                         <div
                                             style={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }}
+                                            onClick={() => handleDelete(event, index)}
+                                        >
+                                            <DeleteOutlined />
+                                        </div>
+                                    </div> : null
+                                }
+                                {
+                                    item.type === 'method' ? <div key="method" className='border border-[#aaa] m-[10px] p-[10px] relative'>
+                                        <div className='text-[blue]'>组件方法</div>
+                                        <div>{getComponentById(item.config.componentId, components)?.desc}</div>
+                                        <div>{item.config.componentId}</div>
+                                        <div>{item.config.method}</div>
+                                        <div style={{ position: 'absolute', top: 10, right: 30, cursor: 'pointer' }}
+                                            onClick={() => handleEdit(item, index)}
+                                        >
+                                            <EditOutlined />
+                                        </div>
+                                        <div style={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }}
                                             onClick={() => handleDelete(event, index)}
                                         >
                                             <DeleteOutlined />
