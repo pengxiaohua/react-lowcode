@@ -1,12 +1,16 @@
 import { create } from 'zustand';
-import ContainerEdit from '../materials/ContainerEdit';
-import ContainerPreview from '../materials/ContainerPreview';
-import ButtonEdit from '../materials/ButtonEdit';
-import ButtonPreview from '../materials/ButtonPreview';
-import PageEdit from '../materials/PageEdit';
-import PagePreview from '../materials/PagePreview';
-import ModalEdit from '../materials/ModalEdit';
-import ModalPreview from '../materials/ModalPreview';
+import ContainerEdit from '../materials/Container/edit';
+import ContainerPreview from '../materials/Container/preview';
+import ButtonEdit from '../materials/Button/edit';
+import ButtonPreview from '../materials/Button/preview';
+import PageEdit from '../materials/Page/edit';
+import PagePreview from '../materials/Page/preview';
+import ModalEdit from '../materials/Modal/edit';
+import ModalPreview from '../materials/Modal/preview';
+import FormEdit from '../materials/Form/edit';
+import FormPreview from '../materials/Form/preview';
+import FormItemEdit from '../materials/FormItem/edit';
+import FormItemPreview from '../materials/FormItem/preview';
 
 export interface IComponentSetting {
     name: string;
@@ -49,6 +53,74 @@ interface IAction {
 export const useComponentConfigStore = create<IState & IAction>((set) => ({
     // key 是组件名，value 是组件配置
     componentConfig: {
+        FormItem: {
+            name: 'FormItem',
+            defaultProps: {
+                name: new Date().getTime(),
+                label: '姓名',
+            },
+            desc: '表单项',
+            setting: [
+                {
+                    name: 'type',
+                    label: '类型',
+                    type: 'select',
+                    options: [
+                        {
+                            label: '文本',
+                            value: 'input',
+                        },
+                        {
+                            label: '日期',
+                            value: 'date',
+                        },
+                    ],
+                },
+                {
+                    name: 'label',
+                    label: '标题',
+                    type: 'input',
+                },
+                {
+                    name: 'name',
+                    label: '字段',
+                    type: 'input',
+                },
+                {
+                    name: 'rules',
+                    label: '校验',
+                    type: 'select',
+                    options: [
+                        {
+                            label: '必填',
+                            value: 'required',
+                        },
+                    ],
+                }
+            ],
+            edit: FormItemEdit,
+            preview: FormItemPreview
+        },
+        Form: {
+            name: 'Form',
+            defaultProps: {},
+            desc: '表单',
+            setting: [
+                {
+                    name: 'title',
+                    label: '标题',
+                    type: 'input'
+                }
+            ],
+            events: [
+                {
+                    name: 'onSubmit',
+                    label: '提交事件'
+                }
+            ],
+            edit: FormEdit,
+            preview: FormPreview
+        },
         Container: {
             name: 'Container',
             defaultProps: {},

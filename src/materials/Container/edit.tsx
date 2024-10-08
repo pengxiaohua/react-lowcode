@@ -1,11 +1,11 @@
 import { useRef, useEffect } from "react";
 import { useDrag } from "react-dnd";
 
-import { ICommonComponentProps } from "./interface";
-import useMaterialsDrop from "../hooks/useMaterialsDrop";
+import { ICommonComponentProps } from "../interface";
+import useMaterialsDrop from "../../hooks/useMaterialsDrop";
 
 const Container = ({ id, name, children, styles }: ICommonComponentProps) => {
-    const { canDrop, drop } = useMaterialsDrop(['Button', 'Container'], id);
+    const { canDrop, drop } = useMaterialsDrop(['Button', 'Container', 'Form'], id);
 
     const divRef = useRef<HTMLDivElement>(null);
 

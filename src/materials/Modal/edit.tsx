@@ -1,8 +1,8 @@
-import { ICommonComponentProps } from "./interface";
-import useMaterialsDrop from "../hooks/useMaterialsDrop";
+import { ICommonComponentProps } from "../interface";
+import useMaterialsDrop from "../../hooks/useMaterialsDrop";
 
 const ModalEdit = ({ id, children, title, styles }: ICommonComponentProps) => {
-    const { canDrop, drop } = useMaterialsDrop(['Button', 'Container'], id);
+    const { canDrop, drop } = useMaterialsDrop(['Button', 'Container', 'Form'], id);
 
     return (
         <div

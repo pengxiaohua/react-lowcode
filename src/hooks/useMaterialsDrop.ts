@@ -21,7 +21,6 @@ const useMaterialsDrop = (accept: string[], id: number) => {
       if (didDrop) {
         return;
       }
-      console.log({ item });
 
       if (item.dragType === 'move') {
         const component = getComponentById(item.id, components)!;

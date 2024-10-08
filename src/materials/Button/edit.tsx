@@ -1,7 +1,7 @@
 import { Button as AntdButton } from 'antd';
 import { useDrag } from 'react-dnd';
 
-import { ICommonComponentProps } from './interface';
+import { ICommonComponentProps } from '../interface';
 
 const Button = ({ id, type, text, styles }: ICommonComponentProps) => {
     const [_, drag] = useDrag({

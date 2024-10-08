@@ -1,4 +1,4 @@
-import { ICommonComponentProps } from "./interface";
+import { ICommonComponentProps } from "../interface";
 
 const Container = ({ children, styles }: ICommonComponentProps) => {
 

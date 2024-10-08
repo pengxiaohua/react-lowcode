@@ -1,4 +1,4 @@
-import { ICommonComponentProps } from "./interface";
+import { ICommonComponentProps } from "../interface";
 
 function Page({ children, styles }: ICommonComponentProps) {
 

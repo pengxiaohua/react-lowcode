@@ -1,8 +1,8 @@
-import { ICommonComponentProps } from "./interface";
-import useMaterialsDrop from "../hooks/useMaterialsDrop";
+import { ICommonComponentProps } from "../interface";
+import useMaterialsDrop from "../../hooks/useMaterialsDrop";
 
 function Page({ id, children, styles }: ICommonComponentProps) {
-    const { drop, canDrop } = useMaterialsDrop(['Container', 'Button', 'Modal'], id);
+    const { drop, canDrop } = useMaterialsDrop(['Container', 'Button', 'Modal', 'Form'], id);
 
     return (
         <div
