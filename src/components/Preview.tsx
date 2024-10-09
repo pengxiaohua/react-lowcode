@@ -18,7 +18,7 @@ const Preview = () => {
             const eventConfig = component.props[event.name];
 
             if (eventConfig) {
-                props[event.name] = () => {
+                props[event.name] = (...args: any[]) => {
                     eventConfig?.actions?.forEach((action: IActionConfig) => {
                         if (action.type === "goToLink" && action.url) {
                             window.location.href = action.url;
@@ -32,11 +32,17 @@ const Preview = () => {
                             const component = componentRefs.current[action.config.componentId];
 
                             if (component) {
-                                component[action.config.method]?.();
+                                component[action.config.method]?.(...args);
                             }
                         } else if (action.type === 'customJS') {
-                            const fn = new Function(action.code);
-                            fn();
+                            const fn = new Function('context', 'args', action.code);
+                            fn({
+                                name: component.name,
+                                props: component.props,
+                                showMessage(content: string) {
+                                    message.success(content)
+                                }
+                            }, args);
                         }
                     })
                 };

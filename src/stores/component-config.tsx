@@ -114,8 +114,14 @@ export const useComponentConfigStore = create<IState & IAction>((set) => ({
             ],
             events: [
                 {
-                    name: 'onSubmit',
+                    name: 'onFinish',
                     label: '提交事件'
+                }
+            ],
+            methods: [
+                {
+                    name: 'submit',
+                    label: '提交'
                 }
             ],
             edit: FormEdit,

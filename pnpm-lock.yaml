@@ -14,6 +14,9 @@ dependencies:
   allotment:
     specifier: ^1.20.2
     version: 1.20.2(react-dom@18.3.1)(react@18.3.1)
+  dayjs:
+    specifier: ^1.11.13
+    version: 1.11.13
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -1573,7 +1576,6 @@ packages:
 
   /dayjs@1.11.13:
     resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
-    dev: true
 
   /debug@4.3.7:
     resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}

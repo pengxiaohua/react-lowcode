@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd'
 import { ICommonComponentProps } from '../interface'
 import useMaterialsDrop from '../../hooks/useMaterialsDrop'
 
-const FormEdit = ({ id, name, children, onSubmit }: ICommonComponentProps) => {
+const FormEdit = ({ id, name, children, onFinish }: ICommonComponentProps) => {
     const [form] = AntdForm.useForm();
     const { canDrop, drop } = useMaterialsDrop(['FormItem'], id);
 
@@ -39,9 +39,7 @@ const FormEdit = ({ id, name, children, onSubmit }: ICommonComponentProps) => {
             data-component-id={id}
             className={`w-[100%] p-[20px] min-h-[100px] ${canDrop ? 'border-[2px] border-[blue]' : 'border-[1px] border-[#000]'}`}
         >
-            <AntdForm labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} form={form} onFinish={(values) => {
-                onSubmit?.(values)
-            }}>
+            <AntdForm labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} form={form} onFinish={(values) => onFinish?.(values)}>
                 {formItems.map((item: any) => {
                     return <AntdForm.Item key={item.name} data-component-id={item.id} name={item.name} label={item.label} >
                         <Input style={{ pointerEvents: 'none' }} />

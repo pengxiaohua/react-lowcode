@@ -13,10 +13,12 @@ const SettingAttr = () => {
 
     useEffect(() => {
         // 组件配置，更新组件
-        const data = form.getFieldsValue();
+        // const data = form.getFieldsValue();
+
+        form.resetFields()
 
         form.setFieldsValue({
-            ...data,
+            // ...data,
             ...currentComponent?.props,
         });
     }, [currentComponent]);
