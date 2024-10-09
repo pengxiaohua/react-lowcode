@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
-import { create } from 'zustand';
+import { create, StateCreator } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface IComponent {
     id: number;
@@ -27,7 +28,7 @@ interface IAction {
     setMode: (mode: IState['mode']) => void;
 }
 
-export const useComponentsStore = create<IState & IAction>(
+const creator: StateCreator<IState & IAction> =
     (set, get) => ({
         components: [
             {
@@ -107,7 +108,15 @@ export const useComponentsStore = create<IState & IAction>(
                 return { components: [...state.components] };
             }),
     })
-);
+
+export const useComponentsStore = create<IState & IAction>()(persist(creator, {
+    name: 'storage-components',
+    partialize: (state) => {
+        // 过滤掉 currentComponentId
+        const { currentComponentId, ...restState } = state;
+        return restState;
+    }
+}));
 
 
 /**
