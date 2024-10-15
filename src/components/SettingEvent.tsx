@@ -169,7 +169,7 @@ const SettingEvent = () => {
                 handleCancel={() => {
                     setActionModalOpen(false)
                 }}
-                action={currentAction}
+                action={currentAction!}
             />
         </div>
     )

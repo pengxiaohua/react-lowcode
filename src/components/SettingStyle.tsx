@@ -25,7 +25,7 @@ const SettingStyle = () => {
 
     const toCssString = (css: Record<string, any>) => {
         let str = `.comp {\n`;
-        for (let key in css) {
+        for (const key in css) {
             let value = css[key];
 
             if (!value) {
@@ -61,10 +61,10 @@ const SettingStyle = () => {
         }
     }
 
-    const handleEditorChange = debounce((value: string) => {
+    const handleEditorChange = debounce((value) => {
         setCss(value);
 
-        let css: Record<string, any> = {};
+        const css: Record<string, any> = {};
 
         try {
             const cssStr = value.replace(/\/\*.*\*\//, '') // 去掉注释 /** */
@@ -94,7 +94,7 @@ const SettingStyle = () => {
                 ))
             }
             <div className='h-[200px] border-[1px] border-[#ccc]'>
-                <CSSEditor value={`.comp{\n\n}`} onChange={handleEditorChange} />
+                <CSSEditor value={css} onChange={handleEditorChange} />
             </div>
         </Form>
     )

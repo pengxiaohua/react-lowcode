@@ -136,6 +136,7 @@ const SelectedHoverHighlight = ({ portalWrapperClassName, containerClassName, co
                             items: parentComponents.map(item => ({
                                 key: item?.id,
                                 label: item?.desc,
+                                type: 'group',
                             })),
                             onClick: ({ key }) => {
                                 setCurrentComponentId(Number(key));

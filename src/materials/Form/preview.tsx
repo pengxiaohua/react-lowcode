@@ -1,4 +1,4 @@
-import React, { forwardRef, ForwardRefRenderFunction, useImperativeHandle, useMemo } from 'react';
+import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { Form as AntdForm, DatePicker, Input } from 'antd';
 import dayjs from 'dayjs';
 
@@ -8,7 +8,7 @@ export interface FormRef {
     submit: () => void
 }
 
-const FormPreview: ForwardRefRenderFunction<FormRef, ICommonComponentProps> = (props, ref) => {
+const FormPreview = forwardRef<FormRef, Omit<ICommonComponentProps, 'ref'>>((props, ref) => {
     console.log({ props });
 
     const { children, onFinish } = props;
@@ -67,6 +67,6 @@ const FormPreview: ForwardRefRenderFunction<FormRef, ICommonComponentProps> = (p
             )
         })}
     </AntdForm>
-}
+})
 
-export default forwardRef(FormPreview);
+export default FormPreview;

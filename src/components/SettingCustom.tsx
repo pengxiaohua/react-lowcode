@@ -31,7 +31,7 @@ const SettingCommon = ({ defaultValue, onChange, value: val }: ICustomJSProps) =
         if (!currentComponentId) return;
 
         setValue(code);
-        onChange?.({ type: 'customJS', code });
+        onChange?.({ type: 'customJS', code: code! });
     };
 
     return (
